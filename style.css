@@ -1,0 +1,43 @@
+* {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+body {
+  text-align: center;
+  padding: 20px;
+  background: url("https://picsum.photos/1400/1000") no-repeat center/cover;
+  min-height: 100vh;
+  overflow: hidden;
+}
+input[type="submit"] {
+  border: none;
+  font-size: 1.6rem;
+  border-radius: 25px;
+  padding: 10px 20px;
+  outline: none;
+  transition: 0.2s;
+  cursor: pointer;
+  background: rgba(221, 160, 221, 0.718);
+  box-shadow: 0 0 2px rgba(51, 51, 51, 0.226);
+}
+input[type="submit"]:hover {
+  transform: translateX(2px);
+  background: rgb(216, 126, 216);
+}
+#countdown {
+  margin: 20px auto 30px;
+  font-size: 8rem;
+  background: rgba(221, 160, 221, 0.578);
+  box-shadow: 0 0 2px rgba(51, 51, 51, 0.226);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  width: 480px;
+  border-radius: 60px;
+}
+
+img {
+  min-height: 400px;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: 20px;
+}
