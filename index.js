@@ -23,7 +23,7 @@ const getInputValue = () => {
       "pic"
     ).innerHTML = `<img src="./img/${index}.png" alt="">`;
 
-    if (seconds === "01") {
+    if (seconds === "01" || (seconds === 30 && minutes === 8)) {
       index++;
 
       const audio = new Audio();
@@ -31,7 +31,7 @@ const getInputValue = () => {
       audio.play();
     }
   };
-  setInterval(updateCountdown, 10);
+  setInterval(updateCountdown, 100);
 };
 
 form.addEventListener("submit", (e) => {
