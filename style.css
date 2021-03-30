@@ -41,3 +41,12 @@ img {
   object-fit: cover;
   border-radius: 20px;
 }
+@media screen and (max-width: 600px) {
+  #countdown {
+    font-size: 3rem;
+    width: 180px;
+  }
+  img {
+    max-width: 100%;
+  }
+}

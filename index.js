@@ -31,7 +31,7 @@ const getInputValue = () => {
       audio.play();
     }
   };
-  setInterval(updateCountdown, 1000);
+  setInterval(updateCountdown, 10);
 };
 
 form.addEventListener("submit", (e) => {
