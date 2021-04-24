@@ -28,8 +28,9 @@ const getInputValue = () => {
       ring();
     }
     if (seconds === 30 && minutes === 8) ring();
+    if (seconds === 30 && minutes === 3) ring();
   };
-  setInterval(updateCountdown, 1000);
+  setInterval(updateCountdown, 50);
 };
 
 const ring = () => {
