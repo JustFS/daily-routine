@@ -30,7 +30,7 @@ const getInputValue = () => {
     if (seconds === 30 && minutes === 8) ring();
     if (seconds === 30 && minutes === 3) ring();
   };
-  setInterval(updateCountdown, 50);
+  setInterval(updateCountdown, 1000);
 };
 
 const ring = () => {
