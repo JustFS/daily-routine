@@ -30,8 +30,12 @@ const updateCountdown = () => {
     ring();
   }
 
-  if (time > 0) time--;
-  else countDownEl.innerHTML = `C'est fini !`;
+  if (time > 0) {
+    time--;
+  } else {
+    countDownEl.innerHTML = `C'est fini !`;
+    clearInterval(interval);
+  }
 };
 
 const ring = () => {
