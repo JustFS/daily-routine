@@ -23,6 +23,15 @@ input[type="submit"]:hover {
   transform: translateX(2px);
   background: rgb(216, 126, 216);
 }
+label {
+  font-size: 0.8rem;
+}
+input[type="text"] {
+  width: 20px;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+}
 #countdown {
   margin: 20px auto 30px;
   font-size: 8rem;

@@ -1,36 +1,37 @@
 const countDownEl = document.getElementById("countdown");
 const form = document.querySelector("form");
+const minutesValue = document.getElementById("minutesValue");
+const positionImg = document.getElementById("pic");
 let index = 0;
+let time;
+let interval;
 
-const getInputValue = () => {
-  let startingMinutes = 10;
-  let time = startingMinutes * 60;
+const start = () => {
+  let startingMinutes = minutesValue.value * 10;
+  time = startingMinutes * 60;
+};
 
-  const updateCountdown = () => {
-    const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
+const updateCountdown = () => {
+  const minutes = Math.floor(time / 60);
+  let seconds = time % 60;
 
-    seconds = seconds < 10 ? "0" + seconds : seconds;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    countDownEl.innerHTML = `${minutes} : ${seconds}`;
-    if (time > 0) {
-      time--;
-    } else {
-      countDownEl.innerHTML = `C'est fini !`;
-    }
+  countDownEl.innerHTML = `${minutes} : ${seconds}`;
+  positionImg.innerHTML = `<img src="./img/${index}.png">`;
 
-    document.getElementById(
-      "pic"
-    ).innerHTML = `<img src="./img/${index}.png" alt="">`;
+  if (minutesValue.value === 1 && seconds === "01") {
+    index++;
+    ring();
+    if (seconds === 30 && index === 1) ring();
+    if (seconds === 30 && index === 6) ring();
+  } else if (minutes % minutesValue.value === 0 && seconds === "01") {
+    index++;
+    ring();
+  }
 
-    if (seconds === "01") {
-      index++;
-      ring();
-    }
-    if (seconds === 30 && minutes === 8) ring();
-    if (seconds === 30 && minutes === 3) ring();
-  };
-  setInterval(updateCountdown, 1000);
+  if (time > 0) time--;
+  else countDownEl.innerHTML = `C'est fini !`;
 };
 
 const ring = () => {
@@ -41,5 +42,7 @@ const ring = () => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  getInputValue();
+  start();
+  clearInterval(interval);
+  interval = setInterval(updateCountdown, 1000);
 });
