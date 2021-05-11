@@ -26,10 +26,12 @@ input[type="submit"]:hover {
 label {
   font-size: 0.8rem;
 }
-input[type="text"] {
-  width: 20px;
+input[type="number"] {
+  width: 25px;
   text-align: center;
   border: none;
+  outline: none;
+  background: none;
   border-radius: 5px;
 }
 #countdown {
