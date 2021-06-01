@@ -1,63 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap");
+
 * {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+}
+i,
+button {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  transition: 0.25s;
+  box-shadow: -20px 20px 60px #75c2d4, 20px -20px 60px #9fffff;
+}
+button:hover {
+  transform: translateX(4px);
 }
 body {
-  text-align: center;
-  padding: 20px;
-  background: url("https://picsum.photos/1400/1000") no-repeat center/cover;
-  min-height: 100vh;
-  overflow: hidden;
+  background: url(./img/Salar-de-Uyuni-Bolivia-Dry-salt-flats-Travelwithmk.com_.jpg)
+    fixed center/cover;
 }
-input[type="submit"] {
-  border: none;
-  font-size: 1.6rem;
-  border-radius: 25px;
-  padding: 10px 20px;
-  outline: none;
-  transition: 0.2s;
+h1 {
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  margin: 25px 0 25px;
+}
+.fa-undo {
+  font-size: 0.7rem;
+  backdrop-filter: blur(2px);
+  padding: 10px 14px;
+  border-radius: 9px;
+  margin-left: 15px;
+  background: #c4f7fc8a;
+  box-shadow: -20px 20px 60px #75c2d4, 20px -20px 60px #9fffff;
   cursor: pointer;
-  background: rgba(221, 160, 221, 0.718);
-  box-shadow: 0 0 2px rgba(51, 51, 51, 0.226);
+  transform: translateY(-5px);
+  transition: 0.2s;
 }
-input[type="submit"]:hover {
-  transform: translateX(2px);
-  background: rgb(216, 126, 216);
+.fa-undo:hover {
+  background: white;
+  transform: translate(3px, -5px);
 }
-label {
-  font-size: 0.8rem;
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+}
+li {
+  flex: 1 0 15%;
+  max-width: 250px;
+  min-height: 250px;
+  margin: 10px;
+  padding: 25px 10px 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(2px);
+  background: rgba(255, 255, 255, 0.603);
+  box-shadow: -20px 20px 60px #75c2d4, 20px -20px 60px #9fffff;
+  display: grid;
+  grid-template-rows: 30px 1fr 35px;
+  grid-template-columns: 50% 50%;
+  grid-template-areas:
+    "a a"
+    "b b"
+    "c d";
+}
+.card-header {
+  display: flex;
+  justify-content: center;
+  grid-area: a;
 }
 input[type="number"] {
-  width: 25px;
-  text-align: center;
+  background: transparent;
   border: none;
+  font-size: 2rem;
+  width: 55px;
+  z-index: 3;
   outline: none;
-  background: none;
-  border-radius: 5px;
+  margin-left: 2px;
 }
-#countdown {
-  margin: 20px auto 30px;
-  font-size: 8rem;
-  background: rgba(221, 160, 221, 0.578);
-  box-shadow: 0 0 2px rgba(51, 51, 51, 0.226);
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
-  width: 480px;
-  border-radius: 60px;
+li span {
+  font-size: 1.8rem;
+  text-align: left;
+  transform: translate(-16px, -2px);
 }
-
 img {
-  min-height: 400px;
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-  border-radius: 20px;
+  max-height: 150px;
+  max-width: 150px;
+  align-self: center;
+  margin: 0 auto;
+  grid-area: b;
 }
-@media screen and (max-width: 600px) {
-  #countdown {
-    font-size: 3rem;
-    width: 180px;
+li i {
+  font-size: 1rem;
+  color: #90becc;
+  border-radius: 10px;
+  transition: 0.1s;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  position: relative;
+}
+li i:hover {
+  background: white;
+  transform: scale(1.03);
+}
+.arrow {
+  margin-right: 4px;
+}
+.deleteBtn {
+  margin-left: 4px;
+}
+.arrow:before,
+.deleteBtn:before {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+#start {
+  margin: 40px 0 80px;
+  background: #d7d8d848;
+  padding: 14px 28px;
+  font-size: 1.8rem;
+  border-radius: 16px;
+  backdrop-filter: blur(3px);
+}
+#start:hover {
+  background: white;
+}
+#start i {
+  transform: translate(8px, -1px);
+  color: #627c85;
+  font-size: 1.3rem;
+}
+.exercice-container {
+  border-radius: 20px;
+  backdrop-filter: blur(3px);
+  background: rgba(255, 255, 255, 0.503);
+  box-shadow: -20px 20px 60px #75c2d4, 20px -20px 60px #aef8f8ad;
+  padding: 50px 0;
+  width: 70%;
+  min-width: 250px;
+  max-width: 600px;
+}
+.exercice-container p {
+  font-size: 5rem;
+  letter-spacing: 10px;
+  margin: 0;
+}
+.exercice-container img {
+  max-height: 200px;
+  max-width: 200px;
+  margin: 10px;
+}
+.exercice-container div {
+  font-size: 2rem;
+  margin-top: 30px;
+  letter-spacing: 8px;
+}
+.btn-reboot {
+  backdrop-filter: blur(2px);
+  background: rgba(255, 255, 255, 0.281);
+  box-shadow: -20px 20px 60px #75c2d4, 20px -20px 60px #9fffff;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+}
+.btn-reboot .fa-times-circle {
+  font-size: 0.85rem;
+  color: rgb(85, 84, 84);
+  margin-left: 4px;
+}
+@media screen and (max-width: 510px) {
+  li {
+    min-width: 90%;
   }
-  img {
-    max-width: 100%;
+}
+@media screen and (min-width: 600px) {
+  .exercice-container img {
+    max-height: 500px;
+    max-width: 500px;
   }
 }
