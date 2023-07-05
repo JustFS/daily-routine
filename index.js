@@ -1,13 +1,11 @@
 const main = document.querySelector("main");
 const basicArray = [
-  { pic: 2, min: 1 },
-  { pic: 0, min: 1 },
-  { pic: 3, min: 2 },
-  { pic: 2, min: 1 },
-  { pic: 5, min: 1 },
+  { pic: 0, min: 2 },
+  { pic: 3, min: 3 },
+  { pic: 2, min: 3 },
+  { pic: 5, min: 2 },
   { pic: 7, min: 2 },
-  { pic: 2, min: 1 },
-  { pic: 9, min: 1 },
+  { pic: 9, min: 3 },
 ];
 let exerciceArray = [];
 
