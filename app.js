@@ -27,7 +27,7 @@ const routine = [
       { pic: "superman", duration: 60 },
       { pic: "rest", duration: 30 },
       { pic: "mountain-climber", duration: 60 },
-      { pic: "burpies", duration: 60 },
+      { pic: "burpees", duration: 60 },
     ],
   },
 ];
@@ -87,7 +87,7 @@ function startTimer() {
     }
 
     render();
-  }, 20);
+  }, 1000);
 }
 
 function pauseTimer() {

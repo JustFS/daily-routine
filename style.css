@@ -36,7 +36,7 @@ h2 {
 
 /* ==== Timer ==== */
 p {
-  font-size: 2.5rem;
+  font-size: 5rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -44,8 +44,8 @@ p {
 /* ==== Images ==== */
 img {
   width:80%;
-  max-width: 800px;
-  max-height: 800px;
+  max-width: 400px;
+  max-height: 400px;
   margin-bottom: 1rem;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -53,8 +53,12 @@ img {
 
 /* ==== Exercice info ==== */
 main p:last-child {
-  font-size: 1rem;
+  font-size: 2rem;
   color: #555;
+}
+
+h2 {
+  font-size: 3rem;
 }
 
 /* ==== Boutons ==== */
@@ -62,7 +66,6 @@ main p:last-child {
   display: flex;
   gap: 1rem;
   margin: 1.5rem 0;
-  height: 200px;
 }
 
 button {
