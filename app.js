@@ -2,34 +2,33 @@
 const routine = [
   {
     name: "Étirements 🤸🏻‍♂️",
-    // 12min
+    // 10min
     exercises: [
-      { pic: "cat-cow", duration: 30 },
       { pic: "thoracic-rotation", duration: 30 },
-      { pic: "hip-opener", duration: 60 },
+      { pic: "hip-opener", duration: 30 },
       { pic: "standing-forward-fold", duration: 90 },
       { pic: "shoulder-opening", duration: 30 },
       { pic: "psoas-stretch", duration: 60 },
       { pic: "plow-pose", duration: 90 },
       { pic: "cobra-pose", duration: 90 },
-      { pic: "calf-stretch", duration: 120 },
-      { pic: "child-pose", duration: 120 },
+      { pic: "calf-stretch", duration: 90 },
+      { pic: "child-pose", duration: 90 },
     ],
   },
   {
     name: "Renforcement 💪",
-    // 8min
+    // 5min30
     exercises: [
       { pic: "squat", duration: 60 },
-      { pic: "pushup", duration: 60 },
-      { pic: "rest", duration: 20 },
-      { pic: "plank", duration: 120 },
-      { pic: "rest", duration: 20 },
-      { pic: "lunge", duration: 60 },
-      { pic: "superman", duration: 30 },
-      { pic: "rest", duration: 20 },
+      { pic: "pushup", duration: 45 },
+      { pic: "rest", duration: 15 },
+      { pic: "plank", duration: 45 },
+      { pic: "rest", duration: 15 },
+      { pic: "lunge", duration: 30 },
+      { pic: "plank", duration: 45 },
+      { pic: "rest", duration: 15 },
       { pic: "mountain-climber", duration: 30 },
-      { pic: "burpees", duration: 60 },
+      { pic: "burpees", duration: 30 },
     ],
   },
 ];
