@@ -17,15 +17,15 @@ const routine = [
   },
   {
     name: "Renforcement 💪",
-    // 5min30
+    // 5min
     exercises: [
-      { pic: "squat", duration: 60 },
+      { pic: "squat", duration: 45 },
       { pic: "pushup", duration: 45 },
       { pic: "rest", duration: 15 },
       { pic: "plank", duration: 45 },
       { pic: "rest", duration: 15 },
       { pic: "lunge", duration: 30 },
-      { pic: "plank", duration: 45 },
+      { pic: "plank", duration: 30 },
       { pic: "rest", duration: 15 },
       { pic: "mountain-climber", duration: 30 },
       { pic: "burpees", duration: 30 },
