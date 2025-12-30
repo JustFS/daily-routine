@@ -45,6 +45,115 @@ const state = {
 const main = document.querySelector("main");
 const ringAudio = document.getElementById("ring");
 
+// --- Assiduité (localStorage)
+const ATT_KEY = "attendance_timestamps";
+
+function toDateKey(ts) {
+  const d = new Date(ts);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function loadAttendance() {
+  try {
+    const raw = localStorage.getItem(ATT_KEY);
+    if (!raw) return [];
+    const arr = JSON.parse(raw);
+    if (!Array.isArray(arr)) return [];
+    return arr.map((v) => Number(v)).filter(Boolean);
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveAttendance(arr) {
+  try {
+    localStorage.setItem(ATT_KEY, JSON.stringify(arr));
+  } catch (e) {}
+}
+
+function getAttendanceSet() {
+  const arr = loadAttendance();
+  const s = new Set(arr.map((t) => toDateKey(t)));
+  return s;
+}
+
+function recordAttendance(ts = Date.now()) {
+  // n'ajoute qu'une seule entrée par jour
+  try {
+    const arr = loadAttendance();
+    const key = toDateKey(ts);
+    const already = arr.some((t) => toDateKey(t) === key);
+    if (!already) {
+      arr.push(Number(ts));
+      saveAttendance(arr);
+    }
+  } catch (e) {}
+}
+
+function computeStreaks() {
+  const set = getAttendanceSet();
+  // current streak (consecutive days ending today)
+  let current = 0;
+  const today = new Date();
+  for (let i = 0; ; i++) {
+    const d = new Date();
+    d.setDate(today.getDate() - i);
+    const k = toDateKey(d.getTime());
+    if (set.has(k)) current++;
+    else break;
+  }
+
+  // best streak
+  const arr = Array.from(set).sort();
+  let best = 0;
+  let run = 0;
+  let prev = null;
+  for (const key of arr) {
+    const parts = key.split("-").map((p) => Number(p));
+    const d = new Date(parts[0], parts[1] - 1, parts[2]);
+    if (prev) {
+      const diff = Math.round((d - prev) / (1000 * 60 * 60 * 24));
+      if (diff === 1) run++;
+      else run = 1;
+    } else {
+      run = 1;
+    }
+    if (run > best) best = run;
+    prev = d;
+  }
+
+  return { current, best };
+}
+
+function renderAttendanceCalendar(containerId = "calendar", days = 35) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = "";
+  const set = getAttendanceSet();
+  const today = new Date();
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(today.getDate() - i);
+    const key = toDateKey(d.getTime());
+    const el = document.createElement("div");
+    el.className = "cal-day" + (set.has(key) ? " active" : "");
+    if (toDateKey(Date.now()) === key) el.className += " today";
+    const lbl = document.createElement("div");
+    lbl.className = "label";
+    lbl.textContent = d.getDate();
+    el.appendChild(lbl);
+    container.appendChild(el);
+  }
+  const s = computeStreaks();
+  const cur = document.getElementById("streakCurrent");
+  const best = document.getElementById("streakBest");
+  if (cur) cur.textContent = s.current;
+  if (best) best.textContent = s.best;
+}
+
 // ==== Fonctions ====
 
 // Formatage mm:ss
@@ -59,8 +168,15 @@ function render() {
   const phase = routine[state.phaseIndex];
   const exo = phase.exercises[state.exerciseIndex];
 
+  const streaks = computeStreaks();
+
   main.innerHTML = `
-    <h2>${phase.name}</h2>
+    <div style="display:flex;gap:1rem;align-items:center;justify-content:center;flex-direction:column;">
+      <h2 style="margin-bottom:.25rem">${phase.name}</h2>
+      <div style="font-size:1rem;color:#555">Série: <strong id="streakInline">${
+        streaks.current
+      }</strong> jours</div>
+    </div>
     <p>${formatTime(state.remaining)}</p>
     <img src="./img/${exo.pic}.png" />
     <h2>${
@@ -162,6 +278,10 @@ function pauseTimer() {
 }
 
 function nextExercise() {
+  // enregistre l'achèvement de l'exercice courant
+  try {
+    recordAttendance();
+  } catch (e) {}
   ring();
   state.exerciseIndex++;
   const phase = routine[state.phaseIndex];
@@ -199,6 +319,29 @@ function finishRoutine() {
 document.getElementById("start").addEventListener("click", startTimer);
 document.getElementById("pause").addEventListener("click", pauseTimer);
 document.getElementById("skip").addEventListener("click", nextExercise);
+
+// Attacher les contrôles d'assiduité
+const attendanceBtn = document.getElementById("attendanceBtn");
+const attendanceModal = document.getElementById("attendanceModal");
+const closeAttendance = document.getElementById("closeAttendance");
+if (attendanceBtn && attendanceModal) {
+  attendanceBtn.addEventListener("click", () => {
+    attendanceModal.setAttribute("aria-hidden", "false");
+    renderAttendanceCalendar();
+  });
+}
+if (closeAttendance && attendanceModal) {
+  closeAttendance.addEventListener("click", () =>
+    attendanceModal.setAttribute("aria-hidden", "true")
+  );
+}
+// fermer en cliquant en dehors
+if (attendanceModal) {
+  attendanceModal.addEventListener("click", (e) => {
+    if (e.target === attendanceModal)
+      attendanceModal.setAttribute("aria-hidden", "true");
+  });
+}
 
 // Premier rendu
 render();

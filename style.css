@@ -100,3 +100,58 @@ img[src*="rest"] {
     font-size: 2.5rem;
   }
 }
+
+/* ==== Modal Assiduité ==== */
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  z-index: 200;
+}
+.modal[aria-hidden="false"] { display: flex; }
+.modal-content {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  width: min(520px, 92%);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  text-align: left;
+}
+.modal-content h3 { margin-bottom: 0.5rem; }
+.close {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  float: right;
+  cursor: pointer;
+}
+.streak-info { display:flex; gap:1rem; margin-bottom: 0.75rem; }
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.cal-day {
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  border-radius: 6px;
+  background: #f1f1f1;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.03);
+}
+.cal-day .label {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  font-size: 0.75rem;
+  color: #666;
+}
+.cal-day.active { background: linear-gradient(180deg,#6ee7b7,#34d399); }
+.cal-day.active .label { color: white; }
+.cal-day.today { outline: 2px solid #f59e0b; }
