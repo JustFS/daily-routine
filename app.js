@@ -72,8 +72,39 @@ function render() {
 
 // Son de transition
 function ring() {
-  ringAudio.currentTime = 0;
-  ringAudio.play();
+  const shortMs = 200; // durée en millisecondes du son joué
+  const targetVolume = 0.6; // volume temporaire (0.0 - 1.0)
+  const prevVolume = ringAudio.volume;
+
+  try {
+    ringAudio.volume = targetVolume;
+    ringAudio.currentTime = 0;
+    const p = ringAudio.play();
+
+    const stopShort = () => {
+      try {
+        ringAudio.pause();
+        ringAudio.currentTime = 0;
+      } catch (e) {}
+      ringAudio.volume = prevVolume;
+    };
+
+    if (p && typeof p.then === "function") {
+      p.then(() => setTimeout(stopShort, shortMs)).catch(() => {
+        // si la lecture est bloquée, on rétablit le volume
+        ringAudio.volume = prevVolume;
+      });
+    } else {
+      setTimeout(stopShort, shortMs);
+    }
+  } catch (e) {
+    // en cas d'erreur, tenter de réinitialiser proprement
+    try {
+      ringAudio.pause();
+      ringAudio.currentTime = 0;
+    } catch (e) {}
+    ringAudio.volume = prevVolume;
+  }
 }
 
 // Timer
