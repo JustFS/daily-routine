@@ -70,40 +70,73 @@ function render() {
   `;
 }
 
-// Son de transition
+// Son de transition — beep court via Web Audio (100ms)
+let _audioCtx = null;
 function ring() {
-  const shortMs = 200; // durée en millisecondes du son joué
-  const targetVolume = 0.6; // volume temporaire (0.0 - 1.0)
-  const prevVolume = ringAudio.volume;
+  const durationSec = 0.1; // 100ms
+  const freq = 1000; // fréquence en Hz
+  const peakGain = 0.12; // volume du beep
 
   try {
-    ringAudio.volume = targetVolume;
-    ringAudio.currentTime = 0;
-    const p = ringAudio.play();
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) throw new Error("Web Audio non supporté");
 
-    const stopShort = () => {
-      try {
-        ringAudio.pause();
-        ringAudio.currentTime = 0;
-      } catch (e) {}
-      ringAudio.volume = prevVolume;
-    };
+    if (!_audioCtx) _audioCtx = new AudioCtx();
+    const ctx = _audioCtx;
 
-    if (p && typeof p.then === "function") {
-      p.then(() => setTimeout(stopShort, shortMs)).catch(() => {
-        // si la lecture est bloquée, on rétablit le volume
-        ringAudio.volume = prevVolume;
-      });
-    } else {
-      setTimeout(stopShort, shortMs);
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => {});
     }
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.value = freq;
+
+    // Envelope pour éviter les clics
+    const now = ctx.currentTime;
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(peakGain, now + 0.01);
+    gain.gain.linearRampToValueAtTime(0.0001, now + durationSec);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + durationSec + 0.02);
+
+    osc.onended = () => {
+      try {
+        osc.disconnect();
+        gain.disconnect();
+      } catch (e) {}
+    };
   } catch (e) {
-    // en cas d'erreur, tenter de réinitialiser proprement
+    // Fallback court sur l'élément <audio> si WebAudio indisponible
     try {
-      ringAudio.pause();
+      if (!ringAudio) return;
+      ringAudio.volume = 0.35;
       ringAudio.currentTime = 0;
+      const p = ringAudio.play();
+      if (p && typeof p.then === "function") {
+        p.then(() =>
+          setTimeout(() => {
+            try {
+              ringAudio.pause();
+              ringAudio.currentTime = 0;
+            } catch (e) {}
+          }, 100)
+        ).catch(() => {});
+      } else {
+        setTimeout(() => {
+          try {
+            ringAudio.pause();
+            ringAudio.currentTime = 0;
+          } catch (e) {}
+        }, 100);
+      }
     } catch (e) {}
-    ringAudio.volume = prevVolume;
   }
 }
 
