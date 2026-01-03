@@ -84,6 +84,20 @@ button:hover {
   background-color: #45a049;
 }
 
+/* Bouton d'assiduité compact, affiché à côté de la série */
+.attendance-inline {
+  height: 32px;
+  padding: 0 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  background-color: #10b981;
+  min-width: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.attendance-inline:hover { background-color: #0ea46f; }
+
 /* ==== Pause / Rest style ==== */
 img[src*="rest"] {
   filter: grayscale(50%);
@@ -99,6 +113,10 @@ img[src*="rest"] {
   h2 {
     font-size: 2.5rem;
   }
+  .controls {
+    gap: 0.5rem;
+  }
+  .attendance-inline { height:28px; font-size:0.8rem; padding:0 0.5rem; }
 }
 
 /* ==== Modal Assiduité ==== */
@@ -135,11 +153,12 @@ img[src*="rest"] {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   gap: 6px;
+  height: 360px; /* fixe la hauteur du calendrier pour qu'elle ne change pas selon le mois */
 }
 .cal-day {
   width: 100%;
-  padding-top: 100%;
   position: relative;
   border-radius: 6px;
   background: #f1f1f1;
@@ -155,3 +174,29 @@ img[src*="rest"] {
 .cal-day.active { background: linear-gradient(180deg,#6ee7b7,#34d399); }
 .cal-day.active .label { color: white; }
 .cal-day.today { outline: 2px solid #f59e0b; }
+
+/* Calendar header (month + nav) */
+.calendar-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:0.5rem;
+  margin: 0.5rem 0 0.75rem 0;
+}
+.calendar-month-label {
+  flex:1;
+  text-align:center;
+  font-weight:600;
+}
+.cal-nav {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  padding: 0.25rem 0.5rem;
+  border-radius:6px;
+  cursor: pointer;
+}
+.cal-day.adjacent-month { opacity: 0.35; }
+
+@media (max-width: 450px) {
+  .calendar-grid { height: 300px; }
+}

@@ -15,7 +15,6 @@
           <button id="start">Start</button>
           <button id="pause">Pause</button>
           <button id="skip">Skip</button>
-          <button id="attendanceBtn">Assiduité</button>
         </div>
   <audio id="ring" src="ring.mp3"></audio>
 
@@ -24,6 +23,11 @@
     <div class="modal-content">
       <button id="closeAttendance" class="close">✕</button>
       <h3>Assiduité</h3>
+      <div class="calendar-header">
+        <button id="calPrev" class="cal-nav" aria-label="Mois précédent">‹</button>
+        <div id="calendarMonth" class="calendar-month-label">Janvier 2026</div>
+        <button id="calNext" class="cal-nav" aria-label="Mois suivant">›</button>
+      </div>
       <div class="streak-info">
         <div>Actuelle: <span id="streakCurrent">0</span> jours</div>
         <div>Meilleure: <span id="streakBest">0</span> jours</div>

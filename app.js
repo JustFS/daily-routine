@@ -32,8 +32,6 @@ const routine = [
     ],
   },
 ];
-
-// ==== État central ====
 const state = {
   phaseIndex: 0,
   exerciseIndex: 0,
@@ -128,25 +126,67 @@ function computeStreaks() {
   return { current, best };
 }
 
-function renderAttendanceCalendar(containerId = "calendar", days = 35) {
+let calendarOffset = 0;
+const MONTHS_FR = [
+  "Janvier",
+  "Février",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Août",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Décembre",
+];
+
+function renderAttendanceCalendar(containerId = "calendar", monthOffset = 0) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = "";
   const set = getAttendanceSet();
   const today = new Date();
-  for (let i = days - 1; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(today.getDate() - i);
+  const firstOfMonth = new Date(
+    today.getFullYear(),
+    today.getMonth() + monthOffset,
+    1
+  );
+  const lastOfMonth = new Date(
+    today.getFullYear(),
+    today.getMonth() + monthOffset + 1,
+    0
+  );
+
+  // start from the Sunday before (or equal) the first of month
+  const start = new Date(firstOfMonth);
+  start.setDate(firstOfMonth.getDate() - firstOfMonth.getDay());
+  // end on the Saturday after (or equal) the last of month
+  const end = new Date(lastOfMonth);
+  end.setDate(lastOfMonth.getDate() + (6 - lastOfMonth.getDay()));
+
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
     const key = toDateKey(d.getTime());
     const el = document.createElement("div");
     el.className = "cal-day" + (set.has(key) ? " active" : "");
-    if (toDateKey(Date.now()) === key) el.className += " today";
+    if (d.getMonth() !== firstOfMonth.getMonth())
+      el.className += " adjacent-month";
+    if (monthOffset === 0 && toDateKey(Date.now()) === key)
+      el.className += " today";
     const lbl = document.createElement("div");
     lbl.className = "label";
     lbl.textContent = d.getDate();
     el.appendChild(lbl);
     container.appendChild(el);
   }
+
+  const monthLabel = document.getElementById("calendarMonth");
+  if (monthLabel)
+    monthLabel.textContent = `${
+      MONTHS_FR[firstOfMonth.getMonth()]
+    } ${firstOfMonth.getFullYear()}`;
+
   const s = computeStreaks();
   const cur = document.getElementById("streakCurrent");
   const best = document.getElementById("streakBest");
@@ -173,9 +213,12 @@ function render() {
   main.innerHTML = `
     <div style="display:flex;gap:1rem;align-items:center;justify-content:center;flex-direction:column;">
       <h2 style="margin-bottom:.25rem">${phase.name}</h2>
-      <div style="font-size:1rem;color:#555">Série: <strong id="streakInline">${
-        streaks.current
-      }</strong> jours</div>
+      <div style="display:flex;gap:.5rem;align-items:center;font-size:1rem;color:#555">
+        <div>Série: <strong id="streakInline">${
+          streaks.current
+        }</strong> jours</div>
+        <button id="attendanceBtn" class="attendance-inline" aria-label="Assiduité">Assid.</button>
+      </div>
     </div>
     <p>${formatTime(state.remaining)}</p>
     <img src="./img/${exo.pic}.png" />
@@ -319,17 +362,23 @@ function finishRoutine() {
 document.getElementById("start").addEventListener("click", startTimer);
 document.getElementById("pause").addEventListener("click", pauseTimer);
 document.getElementById("skip").addEventListener("click", nextExercise);
+// Premier rendu
+render();
 
-// Attacher les contrôles d'assiduité
-const attendanceBtn = document.getElementById("attendanceBtn");
+// Attacher les contrôles d'assiduité via délégation (un seul écouteur, fonctionne si le bouton est recréé)
 const attendanceModal = document.getElementById("attendanceModal");
 const closeAttendance = document.getElementById("closeAttendance");
-if (attendanceBtn && attendanceModal) {
-  attendanceBtn.addEventListener("click", () => {
+document.addEventListener("click", (e) => {
+  const target =
+    e.target instanceof Element ? e.target : e.target.parentElement;
+  const btn =
+    target && target.closest ? target.closest("#attendanceBtn") : null;
+  if (btn && attendanceModal) {
     attendanceModal.setAttribute("aria-hidden", "false");
-    renderAttendanceCalendar();
-  });
-}
+    renderAttendanceCalendar("calendar", calendarOffset);
+  }
+});
+
 if (closeAttendance && attendanceModal) {
   closeAttendance.addEventListener("click", () =>
     attendanceModal.setAttribute("aria-hidden", "true")
@@ -343,5 +392,20 @@ if (attendanceModal) {
   });
 }
 
-// Premier rendu
-render();
+// navigation mois précédent / suivant
+const calPrev = document.getElementById("calPrev");
+const calNext = document.getElementById("calNext");
+if (calPrev) {
+  calPrev.addEventListener("click", (e) => {
+    e.stopPropagation();
+    calendarOffset--;
+    renderAttendanceCalendar("calendar", calendarOffset);
+  });
+}
+if (calNext) {
+  calNext.addEventListener("click", (e) => {
+    e.stopPropagation();
+    calendarOffset++;
+    renderAttendanceCalendar("calendar", calendarOffset);
+  });
+}
