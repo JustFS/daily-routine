@@ -72,13 +72,13 @@ const versionLongue = [
     exercises: [
       { pic: "thoracic-rotation", duration: 30 },
       { pic: "hip-opener", duration: 30 },
-      { pic: "standing-forward-fold", duration: 90 },
+      { pic: "standing-forward-fold", duration: 180 },
       { pic: "shoulder-opening", duration: 30 },
       { pic: "psoas-stretch", duration: 60 },
-      { pic: "plow-pose", duration: 90 },
-      { pic: "cobra-pose", duration: 90 },
-      { pic: "calf-stretch", duration: 90 },
-      { pic: "child-pose", duration: 90 },
+      { pic: "plow-pose", duration: 180 },
+      { pic: "cobra-pose", duration: 180 },
+      { pic: "calf-stretch", duration: 120 },
+      { pic: "child-pose", duration: 180 },
     ],
   },
   {
