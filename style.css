@@ -89,7 +89,7 @@ button {
   color: white;
   border: none;
   padding: 0.6rem 1rem;
-  font-size: 1rem;
+  font-size: 100%;
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 80ms ease;
@@ -102,7 +102,7 @@ button:hover {
 
 /* Small italic subtitle inside buttons */
 .btn-sub {
-  font-size: 0.82rem;
+  font-size: 82%;
   font-style: italic;
   opacity: 0.95;
 }
@@ -111,13 +111,17 @@ button:hover {
 .secondary-controls button {
   height: 52px;
   padding: 0.5rem 1rem;
+  font-size: 95%;
 }
 
-/* Ensure small screens keep layout tidy */
+/* Ensure small screens keep layout tidy without wrapping columns (keep 3 per row) */
 @media (max-width: 450px) {
+  .controls { gap: 0.5rem; }
   .controls button { height: 64px; }
-  .btn-sub { font-size: 0.78rem; }
-}
+  .btn-sub { font-size: 72%; }
+  .attendance-inline { height:28px; font-size:80%; padding:0 0.5rem; }
+  .secondary-controls button { min-width: 48%; }
+} 
 
 /* Secondary controls: centered smaller Pause / Skip */
 .secondary-controls {
@@ -152,7 +156,7 @@ button:hover {
 .attendance-inline {
   height: 32px;
   padding: 0 0.6rem;
-  font-size: 0.85rem;
+  font-size: 85%;
   border-radius: 6px;
   background-color: #10b981;
   min-width: 48px;
