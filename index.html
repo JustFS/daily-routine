@@ -13,9 +13,13 @@
 </main>
       <div class="controls">
           <button id="start">Start</button>
-          <button id="pause">Pause</button>
-          <button id="skip">Skip</button>
-        </div>
+          <button id="startLong">Étirements longs</button>
+          <button id="versionLongue">Version longue</button>
+          <div class="secondary-controls">
+            <button id="pause">Pause</button>
+            <button id="skip">Skip</button>
+          </div>
+        </div>  
   <audio id="ring" src="ring.mp3"></audio>
 
   <!-- Modal calendrier d'assiduité -->
@@ -36,6 +40,9 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <!-- Toast de confirmation d'assiduité -->
+  <div id="toast" class="toast" aria-hidden="true" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script> 
 </body>
 </html>

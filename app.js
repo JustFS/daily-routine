@@ -32,6 +32,72 @@ const routine = [
     ],
   },
 ];
+const etirementsLongs = [
+  {
+    name: "Étirements 🤸🏻‍♂️",
+    // 10min
+    exercises: [
+      { pic: "thoracic-rotation", duration: 30 },
+      { pic: "hip-opener", duration: 30 },
+      { pic: "standing-forward-fold", duration: 180 },
+      { pic: "shoulder-opening", duration: 30 },
+      { pic: "psoas-stretch", duration: 60 },
+      { pic: "plow-pose", duration: 180 },
+      { pic: "cobra-pose", duration: 180 },
+      { pic: "calf-stretch", duration: 120 },
+      { pic: "child-pose", duration: 180 },
+    ],
+  },
+  {
+    name: "Renforcement 💪",
+    // 5min
+    exercises: [
+      { pic: "squat", duration: 45 },
+      { pic: "pushup", duration: 45 },
+      { pic: "rest", duration: 15 },
+      { pic: "plank", duration: 45 },
+      { pic: "rest", duration: 15 },
+      { pic: "lunge", duration: 30 },
+      { pic: "plank", duration: 30 },
+      { pic: "rest", duration: 15 },
+      { pic: "mountain-climber", duration: 30 },
+      { pic: "burpees", duration: 30 },
+    ],
+  },
+];
+const versionLongue = [
+  {
+    name: "Étirements 🤸🏻‍♂️",
+    // 10min
+    exercises: [
+      { pic: "thoracic-rotation", duration: 30 },
+      { pic: "hip-opener", duration: 30 },
+      { pic: "standing-forward-fold", duration: 90 },
+      { pic: "shoulder-opening", duration: 30 },
+      { pic: "psoas-stretch", duration: 60 },
+      { pic: "plow-pose", duration: 90 },
+      { pic: "cobra-pose", duration: 90 },
+      { pic: "calf-stretch", duration: 90 },
+      { pic: "child-pose", duration: 90 },
+    ],
+  },
+  {
+    name: "Renforcement 💪",
+    // 5min
+    exercises: [
+      { pic: "squat", duration: 60 },
+      { pic: "pushup", duration: 60 },
+      { pic: "rest", duration: 15 },
+      { pic: "plank", duration: 60 },
+      { pic: "rest", duration: 15 },
+      { pic: "lunge", duration: 60 },
+      { pic: "plank", duration: 60 },
+      { pic: "rest", duration: 15 },
+      { pic: "mountain-climber", duration: 30 },
+      { pic: "burpees", duration: 60 },
+    ],
+  },
+];
 const state = {
   phaseIndex: 0,
   exerciseIndex: 0,
@@ -87,8 +153,12 @@ function recordAttendance(ts = Date.now()) {
     if (!already) {
       arr.push(Number(ts));
       saveAttendance(arr);
+      return true; // nouvelle entrée ajoutée
     }
-  } catch (e) {}
+    return false; // déjà présent pour la journée
+  } catch (e) {
+    return false;
+  }
 }
 
 function computeStreaks() {
@@ -229,6 +299,20 @@ function render() {
   `;
 }
 
+// Petit toast de confirmation affiché en bas de l'écran
+function showToast(msg, duration = 1800) {
+  const t = document.getElementById("toast");
+  if (!t) return;
+  t.textContent = msg;
+  t.setAttribute("aria-hidden", "false");
+  t.classList.add("show");
+  if (t._timeout) clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => {
+    t.classList.remove("show");
+    t.setAttribute("aria-hidden", "true");
+  }, duration);
+}
+
 // Son de transition — beep court via Web Audio (100ms)
 let _audioCtx = null;
 function ring() {
@@ -302,6 +386,14 @@ function ring() {
 // Timer
 function startTimer() {
   if (state.running) return;
+  // Enregistre l'assiduité au démarrage de la routine (une seule entrée par jour)
+  try {
+    const added = recordAttendance();
+    if (added) showToast("Assiduité enregistrée ✔");
+  } catch (e) {}
+  // Met à jour l'affichage immédiatement pour refléter l'assiduité
+  render();
+
   state.running = true;
   state.timer = setInterval(() => {
     state.remaining--;
@@ -359,7 +451,41 @@ function finishRoutine() {
 }
 
 // ==== Événements boutons ====
+
+// Démarre une routine donnée (remplace le contenu de `routine` puis démarre le timer)
+function startSelectedRoutine(newRoutine) {
+  try {
+    pauseTimer();
+    if (!Array.isArray(newRoutine) || newRoutine.length === 0) return;
+
+    // Remplace le contenu du tableau `routine` sans réaffecter la const
+    routine.length = 0;
+    newRoutine.forEach((r) => routine.push(r));
+
+    state.phaseIndex = 0;
+    state.exerciseIndex = 0;
+    state.remaining = routine[0].exercises[0].duration;
+
+    render();
+    startTimer();
+  } catch (e) {}
+}
+
 document.getElementById("start").addEventListener("click", startTimer);
+// Bouton pour lancer les étirements longs
+const startLongBtn = document.getElementById("startLong");
+if (startLongBtn)
+  startLongBtn.addEventListener("click", () =>
+    startSelectedRoutine(etirementsLongs)
+  );
+
+// Bouton pour lancer la "Version longue"
+const versionLongBtn = document.getElementById("versionLongue");
+if (versionLongBtn)
+  versionLongBtn.addEventListener("click", () =>
+    startSelectedRoutine(versionLongue)
+  );
+
 document.getElementById("pause").addEventListener("click", pauseTimer);
 document.getElementById("skip").addEventListener("click", nextExercise);
 // Premier rendu
