@@ -33,9 +33,10 @@ const routine = [
   },
 ];
 const etirementsLongs = [
+  // 21min30
   {
     name: "Étirements 🤸🏻‍♂️",
-    // 10min
+    // 16min30
     exercises: [
       { pic: "thoracic-rotation", duration: 30 },
       { pic: "hip-opener", duration: 30 },
@@ -66,9 +67,10 @@ const etirementsLongs = [
   },
 ];
 const versionLongue = [
+  //23min45
   {
     name: "Étirements 🤸🏻‍♂️",
-    // 10min
+    // 16min30
     exercises: [
       { pic: "thoracic-rotation", duration: 30 },
       { pic: "hip-opener", duration: 30 },
@@ -83,7 +85,7 @@ const versionLongue = [
   },
   {
     name: "Renforcement 💪",
-    // 5min
+    // 7min25
     exercises: [
       { pic: "squat", duration: 60 },
       { pic: "pushup", duration: 60 },
@@ -312,6 +314,41 @@ function showToast(msg, duration = 1800) {
     t.setAttribute("aria-hidden", "true");
   }, duration);
 }
+
+// Calcul de la durée totale d'une routine (en secondes)
+function computeTotalDuration(rout) {
+  return rout.reduce((total, phase) => {
+    return (
+      total +
+      (phase.exercises || []).reduce((s, ex) => s + Number(ex.duration || 0), 0)
+    );
+  }, 0);
+}
+
+// Formatage en "15min" ou "21m30" si secondes non-nulles
+function formatDuration(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return s === 0 ? `${m}min` : `${m}m${String(s).padStart(2, "0")}`;
+}
+
+function updateButtonDurations() {
+  const mappings = [
+    { id: "start", routineRef: routine },
+    { id: "startLong", routineRef: etirementsLongs },
+    { id: "versionLongue", routineRef: versionLongue },
+  ];
+  mappings.forEach(({ id, routineRef }) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const sub = btn.querySelector(".btn-sub");
+    if (!sub) return;
+    sub.textContent = formatDuration(computeTotalDuration(routineRef));
+  });
+}
+
+// initial update des labels de durée
+updateButtonDurations();
 
 // Son de transition — beep court via Web Audio (100ms)
 let _audioCtx = null;

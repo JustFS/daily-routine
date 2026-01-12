@@ -74,12 +74,21 @@ h2 {
 /* Make control buttons expand to fill grid cells */
 .controls button { width: 100%; }
 
+/* Primary buttons: stack label + small subtitle */
+.controls button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
 button {
-    height: 60px;
+  height: 72px; /* more room for small subtitle */
   background-color: #4caf50; /* vert doux */
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
+  padding: 0.6rem 1rem;
   font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
@@ -89,6 +98,25 @@ button {
 button:hover {
   background-color: #45a049;
   transform: translateY(-1px);
+}
+
+/* Small italic subtitle inside buttons */
+.btn-sub {
+  font-size: 0.82rem;
+  font-style: italic;
+  opacity: 0.95;
+}
+
+/* Keep secondary controls smaller (override) */
+.secondary-controls button {
+  height: 52px;
+  padding: 0.5rem 1rem;
+}
+
+/* Ensure small screens keep layout tidy */
+@media (max-width: 450px) {
+  .controls button { height: 64px; }
+  .btn-sub { font-size: 0.78rem; }
 }
 
 /* Secondary controls: centered smaller Pause / Skip */
