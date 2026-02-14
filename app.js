@@ -2,7 +2,7 @@
 const routine = [
   {
     name: "Étirements 🤸🏻‍♂️",
-    // 10min
+    // 9min
     exercises: [
       { pic: "thoracic-rotation", duration: 15 },
       { pic: "thoracic-rotation", duration: 15 },
@@ -10,8 +10,6 @@ const routine = [
       { pic: "hip-opener", duration: 15 },
       { pic: "standing-forward-fold", duration: 90 },
       { pic: "shoulder-opening", duration: 30 },
-      { pic: "psoas-stretch", duration: 30 },
-      { pic: "psoas-stretch", duration: 30 },
       { pic: "plow-pose", duration: 60 },
       { pic: "cobra-pose", duration: 120 },
       { pic: "calf-stretch", duration: 45 },
@@ -23,12 +21,11 @@ const routine = [
     name: "Renforcement 💪",
     // 6min
     exercises: [
-      { pic: "squat", duration: 45 },
-      { pic: "pushup", duration: 45 },
-      { pic: "rest", duration: 15 },
-      { pic: "lunge", duration: 30 },
+      { pic: "pushup", duration: 30 },
+      { pic: "squat", duration: 30 },
+      { pic: "rest", duration: 30 },
       { pic: "plank", duration: 180 },
-      { pic: "rest", duration: 15 },
+      { pic: "rest", duration: 30 },
       { pic: "burpees", duration: 30 },
     ],
   },
@@ -45,8 +42,6 @@ const etirementsLongs = [
       { pic: "hip-opener", duration: 15 },
       { pic: "standing-forward-fold", duration: 180 },
       { pic: "shoulder-opening", duration: 30 },
-      { pic: "psoas-stretch", duration: 30 },
-      { pic: "psoas-stretch", duration: 30 },
       { pic: "plow-pose", duration: 60 },
       { pic: "cobra-pose", duration: 180 },
       { pic: "calf-stretch", duration: 60 },
@@ -58,12 +53,11 @@ const etirementsLongs = [
     name: "Renforcement 💪",
     // 6min
     exercises: [
-      { pic: "squat", duration: 45 },
-      { pic: "pushup", duration: 45 },
-      { pic: "rest", duration: 15 },
-      { pic: "lunge", duration: 30 },
+      { pic: "pushup", duration: 30 },
+      { pic: "squat", duration: 30 },
+      { pic: "rest", duration: 30 },
       { pic: "plank", duration: 180 },
-      { pic: "rest", duration: 15 },
+      { pic: "rest", duration: 30 },
       { pic: "burpees", duration: 30 },
     ],
   },
@@ -80,8 +74,6 @@ const versionLongue = [
       { pic: "hip-opener", duration: 15 },
       { pic: "standing-forward-fold", duration: 180 },
       { pic: "shoulder-opening", duration: 30 },
-      { pic: "psoas-stretch", duration: 30 },
-      { pic: "psoas-stretch", duration: 30 },
       { pic: "plow-pose", duration: 60 },
       { pic: "cobra-pose", duration: 180 },
       { pic: "calf-stretch", duration: 60 },
@@ -93,12 +85,11 @@ const versionLongue = [
     name: "Renforcement 💪",
     // 7min30
     exercises: [
-      { pic: "squat", duration: 60 },
       { pic: "pushup", duration: 60 },
-      { pic: "rest", duration: 15 },
-      { pic: "lunge", duration: 60 },
+      { pic: "squat", duration: 60 },
+      { pic: "rest", duration: 30 },
       { pic: "plank", duration: 180 },
-      { pic: "rest", duration: 15 },
+      { pic: "rest", duration: 30 },
       { pic: "burpees", duration: 60 },
     ],
   },
@@ -121,7 +112,7 @@ function toDateKey(ts) {
   const d = new Date(ts);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
     2,
-    "0"
+    "0",
   )}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
@@ -226,12 +217,12 @@ function renderAttendanceCalendar(containerId = "calendar", monthOffset = 0) {
   const firstOfMonth = new Date(
     today.getFullYear(),
     today.getMonth() + monthOffset,
-    1
+    1,
   );
   const lastOfMonth = new Date(
     today.getFullYear(),
     today.getMonth() + monthOffset + 1,
-    0
+    0,
   );
 
   // start from the Sunday before (or equal) the first of month
@@ -409,7 +400,7 @@ function ring() {
               ringAudio.pause();
               ringAudio.currentTime = 0;
             } catch (e) {}
-          }, 100)
+          }, 100),
         ).catch(() => {});
       } else {
         setTimeout(() => {
@@ -516,14 +507,14 @@ document.getElementById("start").addEventListener("click", startTimer);
 const startLongBtn = document.getElementById("startLong");
 if (startLongBtn)
   startLongBtn.addEventListener("click", () =>
-    startSelectedRoutine(etirementsLongs)
+    startSelectedRoutine(etirementsLongs),
   );
 
 // Bouton pour lancer la "Version longue"
 const versionLongBtn = document.getElementById("versionLongue");
 if (versionLongBtn)
   versionLongBtn.addEventListener("click", () =>
-    startSelectedRoutine(versionLongue)
+    startSelectedRoutine(versionLongue),
   );
 
 document.getElementById("pause").addEventListener("click", pauseTimer);
@@ -547,7 +538,7 @@ document.addEventListener("click", (e) => {
 
 if (closeAttendance && attendanceModal) {
   closeAttendance.addEventListener("click", () =>
-    attendanceModal.setAttribute("aria-hidden", "true")
+    attendanceModal.setAttribute("aria-hidden", "true"),
   );
 }
 // fermer en cliquant en dehors
