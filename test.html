@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tests de la Routine</title>
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .test-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Tests de la Routine</h1>
+        <div id="test-results"></div>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        const testResults = document.getElementById('test-results');
+
+        function runTest(name, testFn) {
+            try {
+                testFn();
+                testResults.innerHTML += `
+                    <div class="test-section">
+                        <h3>${name}</h3>
+                        <div class="test-result success">✓ Test réussi</div>
+                    </div>
+                `;
+            } catch (error) {
+                testResults.innerHTML += `
+                    <div class="test-section">
+                        <h3>${name}</h3>
+                        <div class="test-result error">✗ Test échoué: ${error.message}</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Tests de la classe Exercice
+        runTest('Initialisation de Exercice', () => {
+            const exercice = new Exercice();
+            if (exercice.index !== 0) throw new Error('Index incorrect');
+            if (exercice.minutes !== 2) throw new Error('Minutes incorrectes');
+            if (exercice.seconds !== 0) throw new Error('Secondes incorrectes');
+        });
+
+        // Tests des Utils
+        runTest('Stockage dans localStorage', () => {
+            utils.store();
+            const stored = localStorage.getItem('exercices');
+            if (!stored) throw new Error('Aucune donnée stockée');
+        });
+
+        runTest('Réinitialisation des exercices', () => {
+            utils.reboot();
+            if (JSON.stringify(exerciceArray) !== JSON.stringify(basicArray)) {
+                throw new Error('Réinitialisation incorrecte');
+            }
+        });
+
+        // Tests de la Page
+        runTest('Affichage de la page lobby', () => {
+            page.lobby();
+            const title = document.querySelector('h1').innerHTML;
+            if (!title.includes('Paramétrage')) throw new Error('Titre incorrect');
+        });
+
+        runTest('Démarrage de la routine', () => {
+            page.routine();
+            const title = document.querySelector('h1').innerHTML;
+            if (title !== 'Routine') throw new Error('Titre incorrect');
+        });
+    </script>
+</body>
+</html> 

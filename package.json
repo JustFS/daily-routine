@@ -1,0 +1,13 @@
+{
+  "name": "daily-routine",
+  "version": "1.0.0",
+  "description": "Application de routine d'exercices",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+} 
