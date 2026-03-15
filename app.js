@@ -4,8 +4,6 @@ const routine = [
     name: "Étirements 🤸🏻‍♂️",
     // 9min
     exercises: [
-      { pic: "thoracic-rotation", duration: 15 },
-      { pic: "thoracic-rotation", duration: 15 },
       { pic: "hip-opener", duration: 15 },
       { pic: "hip-opener", duration: 15 },
       { pic: "standing-forward-fold", duration: 90 },
@@ -36,8 +34,6 @@ const etirementsLongs = [
     name: "Étirements 🤸🏻‍♂️",
     // 14min30
     exercises: [
-      { pic: "thoracic-rotation", duration: 15 },
-      { pic: "thoracic-rotation", duration: 15 },
       { pic: "hip-opener", duration: 15 },
       { pic: "hip-opener", duration: 15 },
       { pic: "standing-forward-fold", duration: 180 },
@@ -68,8 +64,6 @@ const versionLongue = [
     name: "Étirements 🤸🏻‍♂️",
     // 14min30
     exercises: [
-      { pic: "thoracic-rotation", duration: 15 },
-      { pic: "thoracic-rotation", duration: 15 },
       { pic: "hip-opener", duration: 15 },
       { pic: "hip-opener", duration: 15 },
       { pic: "standing-forward-fold", duration: 180 },
