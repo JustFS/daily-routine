@@ -19,7 +19,7 @@ const routine = [
     name: "Renforcement 💪",
     // 6min
     exercises: [
-      { pic: "plank", duration: 180 },
+      { pic: "plank", duration: 120 },
       { pic: "rest", duration: 15 },
       { pic: "pushup", duration: 30 },
       { pic: "squat", duration: 30 },
@@ -49,7 +49,7 @@ const etirementsLongs = [
     name: "Renforcement 💪",
     // 6min
     exercises: [
-      { pic: "plank", duration: 180 },
+      { pic: "plank", duration: 120 },
       { pic: "rest", duration: 15 },
       { pic: "pushup", duration: 30 },
       { pic: "squat", duration: 30 },
@@ -267,25 +267,41 @@ function formatTime(seconds) {
 function render() {
   const phase = routine[state.phaseIndex];
   const exo = phase.exercises[state.exerciseIndex];
-
   const streaks = computeStreaks();
+  const progress = Math.round((state.remaining / exo.duration) * 100);
+  const exerciseLabel =
+    exo.pic.charAt(0).toUpperCase() + exo.pic.slice(1).replace(/-/g, " ");
 
   main.innerHTML = `
-    <div style="display:flex;gap:1rem;align-items:center;justify-content:center;flex-direction:column;">
-      <h2 style="margin-bottom:.25rem">${phase.name}</h2>
-      <div style="display:flex;gap:.5rem;align-items:center;font-size:1rem;color:#555">
-        <div>Série: <strong id="streakInline">${
-          streaks.current
-        }</strong> jours</div>
-        <button id="attendanceBtn" class="attendance-inline" aria-label="Assiduité">Assid.</button>
+    <section class="hero-card">
+      <div class="hero-header">
+        <div>
+          <span class="eyebrow">Routine active</span>
+          <h2>${phase.name}</h2>
+        </div>
+
+        <div class="stat-pill">
+          <span>${streaks.current} jours</span>
+          <small>Assiduité</small>
+        </div>
       </div>
-    </div>
-    <p>${formatTime(state.remaining)}</p>
-    <img src="./img/${exo.pic}.png" />
-    <h2>${
-      exo.pic.charAt(0).toUpperCase() + exo.pic.slice(1).replace(/-/g, " ")
-    }</h2>
-    <p>Exercice ${state.exerciseIndex + 1} / ${phase.exercises.length}</p>
+
+      <div class="progress-block">
+        <div class="progress-ring" style="--progress:${progress};">
+          <div class="timer-value">${formatTime(state.remaining)}</div>
+        </div>
+
+        <div class="exercise-meta">
+          <div class="meta-title">${exerciseLabel}</div>
+          <div class="meta-sub">Exercice ${state.exerciseIndex + 1} / ${phase.exercises.length}</div>
+          <span class="phase-badge">${progress}% restant</span>
+        </div>
+      </div>
+
+      <div class="image-container">
+        <img src="./img/${exo.pic}.png" alt="${exerciseLabel}" />
+      </div>
+    </section>
   `;
 }
 

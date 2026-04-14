@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="./img/logo.png">
-  <title>Routine</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./img/logo.png" />
+  <title>Daily Routine</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main>
+  <div class="app-background">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
 
-</main>
-      <div class="controls">
-          <button id="start">
-            <span class="btn-main">Start</span>
-            <small class="btn-sub">15min</small>
-          </button>
-          <button id="startLong">
-            <span class="btn-main">Étirements longs</span>
-            <small class="btn-sub">21m30</small>
-          </button>
-          <button id="versionLongue">
-            <span class="btn-main">Version longue</span>
-            <small class="btn-sub">24min</small>
-          </button>
-          <div class="secondary-controls">
-            <button id="pause">Pause</button>
-            <button id="skip">Skip</button>
-          </div>
-        </div>   
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand">
+        <img src="./img/logo.png" alt="Logo Routine" class="brand-logo" />
+        <div>
+          <span class="brand-title">Daily Routine</span>
+          <p class="brand-subtitle">Move with intention. Finish with focus.</p>
+        </div>
+      </div>
+
+      <button class="attendance-chip" id="attendanceBtn" type="button" aria-label="Voir l'assiduité">
+        <span>Assiduité</span>
+      </button>
+    </header>
+
+    <main></main>
+
+    <section class="control-panel" aria-label="Contrôles de routine">
+      <div class="preset-grid">
+        <button id="start" class="preset-card">
+          <span class="btn-main">Start</span>
+          <small class="btn-sub">15min</small>
+        </button>
+        <button id="startLong" class="preset-card">
+          <span class="btn-main">Étirements longs</span>
+          <small class="btn-sub">21m30</small>
+        </button>
+        <button id="versionLongue" class="preset-card">
+          <span class="btn-main">Version longue</span>
+          <small class="btn-sub">24min</small>
+        </button>
+      </div>
+
+      <div class="secondary-controls">
+        <button id="pause" class="ghost-btn">Pause</button>
+        <button id="skip" class="ghost-btn">Skip</button>
+      </div>
+    </section>
+  </div>
+
   <audio id="ring" src="ring.mp3"></audio>
 
-  <!-- Modal calendrier d'assiduité -->
   <div id="attendanceModal" class="modal" aria-hidden="true">
     <div class="modal-content">
       <button id="closeAttendance" class="close">✕</button>
@@ -49,9 +72,8 @@
     </div>
   </div>
 
-  <!-- Toast de confirmation d'assiduité -->
   <div id="toast" class="toast" aria-hidden="true" role="status" aria-live="polite"></div>
 
-  <script src="app.js"></script> 
+  <script src="app.js"></script>
 </body>
 </html>
