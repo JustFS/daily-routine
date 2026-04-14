@@ -263,12 +263,19 @@ function formatTime(seconds) {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
+function dayLabel(count) {
+  return count <= 1 ? "jour" : "jours";
+}
+
 // Affichage
 function render() {
   const phase = routine[state.phaseIndex];
   const exo = phase.exercises[state.exerciseIndex];
   const streaks = computeStreaks();
-  const progress = Math.round((state.remaining / exo.duration) * 100);
+  const exerciseProgress = Math.round((state.remaining / exo.duration) * 100);
+  const routineProgress = Math.round(
+    (state.exerciseIndex / phase.exercises.length) * 100,
+  );
   const exerciseLabel =
     exo.pic.charAt(0).toUpperCase() + exo.pic.slice(1).replace(/-/g, " ");
 
@@ -280,21 +287,20 @@ function render() {
           <h2>${phase.name}</h2>
         </div>
 
-        <div class="stat-pill">
-          <span>${streaks.current} jours</span>
-          <small>Assiduité</small>
-        </div>
+        <button class="attendance-chip" id="attendanceBtn" type="button" aria-label="Voir l'assiduité">
+          <span>${streaks.current} ${dayLabel(streaks.current)} assiduité</span>
+        </button>
       </div>
 
       <div class="progress-block">
-        <div class="progress-ring" style="--progress:${progress};">
+        <div class="progress-ring" style="--progress:${exerciseProgress};">
           <div class="timer-value">${formatTime(state.remaining)}</div>
         </div>
 
         <div class="exercise-meta">
           <div class="meta-title">${exerciseLabel}</div>
           <div class="meta-sub">Exercice ${state.exerciseIndex + 1} / ${phase.exercises.length}</div>
-          <span class="phase-badge">${progress}% restant</span>
+          <span class="phase-badge">${routineProgress}% complété</span>
         </div>
       </div>
 
