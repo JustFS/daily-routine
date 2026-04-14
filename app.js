@@ -1,7 +1,7 @@
 // ==== Données de la routine ====
 const routine = [
   {
-    name: "Étirements 🤸🏻‍♂️",
+    name: "Étirements",
     // 9min
     exercises: [
       { pic: "hip-opener", duration: 15 },
@@ -16,7 +16,7 @@ const routine = [
     ],
   },
   {
-    name: "Renforcement 💪",
+    name: "Renforcement",
     // 6min
     exercises: [
       { pic: "plank", duration: 120 },
@@ -287,9 +287,12 @@ function render() {
           <h2>${phase.name}</h2>
         </div>
 
-        <button class="attendance-chip" id="attendanceBtn" type="button" aria-label="Voir l'assiduité">
-          <span>${streaks.current} ${dayLabel(streaks.current)} assiduité</span>
-        </button>
+        <div class="hero-right">
+          <button class="attendance-chip" id="attendanceBtn" type="button" aria-label="Voir l'assiduité">
+            <span>${streaks.current} ${dayLabel(streaks.current)} assiduité</span>
+          </button>
+          <span class="phase-badge">${routineProgress}% complété</span>
+        </div>
       </div>
 
       <div class="progress-block">
@@ -300,7 +303,6 @@ function render() {
         <div class="exercise-meta">
           <div class="meta-title">${exerciseLabel}</div>
           <div class="meta-sub">Exercice ${state.exerciseIndex + 1} / ${phase.exercises.length}</div>
-          <span class="phase-badge">${routineProgress}% complété</span>
         </div>
       </div>
 
