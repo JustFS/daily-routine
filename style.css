@@ -297,7 +297,7 @@ main {
 
 .control-panel {
   display: grid;
-  gap: 0;
+  gap: 4px;
   align-items: stretch;
 }
 
