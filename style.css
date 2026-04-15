@@ -203,7 +203,7 @@ main {
   grid-template-columns: minmax(200px, 280px) 1fr;
   gap: 1rem;
   align-items: center;
-  margin-top:0px;
+  margin: top -20px;
 }
 
 .progress-ring {
