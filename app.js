@@ -20,10 +20,8 @@ const routine = [
     // 6min
     exercises: [
       { pic: "plank", duration: 120 },
-      { pic: "rest", duration: 15 },
       { pic: "squat", duration: 30 },
       { pic: "pushup", duration: 30 },
-      { pic: "rest", duration: 15 },
       { pic: "burpees", duration: 30 },
     ],
   },
@@ -50,10 +48,8 @@ const etirementsLongs = [
     // 6min
     exercises: [
       { pic: "plank", duration: 120 },
-      { pic: "rest", duration: 15 },
       { pic: "squat", duration: 30 },
       { pic: "pushup", duration: 30 },
-      { pic: "rest", duration: 15 },
       { pic: "burpees", duration: 30 },
     ],
   },
@@ -80,10 +76,8 @@ const versionLongue = [
     // 7min30
     exercises: [
       { pic: "plank", duration: 180 },
-      { pic: "rest", duration: 15 },
       { pic: "squat", duration: 60 },
       { pic: "pushup", duration: 60 },
-      { pic: "rest", duration: 15 },
       { pic: "burpees", duration: 60 },
     ],
   },
