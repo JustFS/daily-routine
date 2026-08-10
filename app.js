@@ -2,7 +2,6 @@
 const routine = [
   {
     name: "Étirements",
-    // 9min
     exercises: [
       { pic: "hip-opener", duration: 15 },
       { pic: "hip-opener", duration: 15 },
@@ -17,20 +16,17 @@ const routine = [
   },
   {
     name: "Renforcement",
-    // 6min
     exercises: [
       { pic: "plank", duration: 90 },
-      { pic: "squat", duration: 60 },
+      { pic: "squat", duration: 30 },
       { pic: "pushup", duration: 60 },
       { pic: "burpees", duration: 30 },
     ],
   },
 ];
 const etirementsLongs = [
-  // 21min30
   {
     name: "Étirements 🤸🏻‍♂️",
-    // 14min30
     exercises: [
       { pic: "hip-opener", duration: 15 },
       { pic: "hip-opener", duration: 15 },
@@ -45,20 +41,17 @@ const etirementsLongs = [
   },
   {
     name: "Renforcement 💪",
-    // 6min
     exercises: [
       { pic: "plank", duration: 90 },
-      { pic: "squat", duration: 60 },
+      { pic: "squat", duration: 30 },
       { pic: "pushup", duration: 60 },
       { pic: "burpees", duration: 30 },
     ],
   },
 ];
 const versionLongue = [
-  //23min45
   {
     name: "Étirements 🤸🏻‍♂️",
-    // 14min30
     exercises: [
       { pic: "hip-opener", duration: 15 },
       { pic: "hip-opener", duration: 15 },
@@ -73,9 +66,8 @@ const versionLongue = [
   },
   {
     name: "Renforcement 💪",
-    // 7min30
     exercises: [
-      { pic: "plank", duration: 180 },
+      { pic: "plank", duration: 120 },
       { pic: "squat", duration: 60 },
       { pic: "pushup", duration: 120 },
       { pic: "burpees", duration: 60 },
